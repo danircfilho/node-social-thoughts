@@ -8,6 +8,59 @@ const app = express()
 
 const conn = require('./db/conn')
 
+//template engine
+app.engine('handlebars', exphbs.engine())
+app.set('view engine', 'handlebars')
+
+//receive response from the body (receber do body)
+app.use(
+  express.urlencoded({
+    extended: true
+  })
+)
+
+//receive data in JSON (receber em JSON)
+app.use(express.json())
+
+//sessions - where sessions will be saved (sessões salvas)
+app.use(
+  session({
+    name: 'session', //nome padrão
+    secret: 'nosso_secret', //proteger as sessões do usuário
+    resave: false, //caiu a sessão desconecta
+    saveUninitialized: false,
+    //onde será salvo (store) - 'path', 'os' (core modules) - caminho para salvar na pasta sessions (servidor)
+    store: new FileStore({
+      logFn: function() {},
+      path: require('path').join(require('os').tmpdir(), 'sessions'),
+    }),
+    cookie: {
+      secure: false,
+      maxAge: 360000, //equivale a 01 dia
+      expires: new Date(Date.now() + 360000),
+      httpOnly: true //em produção, para https deve-se mudar esta configuração (certificado de segurança)
+    }
+  })
+)
+
+//flash messages (feedback do sistema sobre mudanças - status do sistema)
+app.use(flash())
+
+//public  patch - assets (pasta padrão para imagens, css, etc)
+app.use(express.static('public'))
+
+//set session to res - sessão de resposta
+//nota, sempre será seguido (next), entretanto se o usuário estiver logado (id) vai para a sessão dele
+app.use((req, res, next) => {
+
+  if(req.session.userid) {
+    res.locals.sessions = req.sessions
+  }
+
+  next()
+  
+})
+
 conn
 .sync()
 .then(() => {
