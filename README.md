@@ -1,6 +1,6 @@
 # Project Node.Js
 
-## Descriptions: Project to learn and develop.
+## Descriptions: Project to train Nodejs, exemplifying a social network.
 
 - Express 
 - Handlebars
