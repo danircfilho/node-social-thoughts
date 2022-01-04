@@ -23,11 +23,16 @@
     </ul>
   </nav>
   <div class="container">
-    <!--Mensagens-->
+    <!--Mensagens - Flash Messages-->
+    {{#if messages.message}}
+      <div class="message">
+        {{messages.message}}
+      </div>
+    {{/if}}
     {{{ body }}}
   </div>
   <footer>
-    <span>Toughts</span> &copy 2022
+    <span>My thoughts &copy 2022</span>
   </footer>
 </body>
 </html>
