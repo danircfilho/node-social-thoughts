@@ -66,7 +66,7 @@ app.use(express.static('public'))
 app.use((req, res, next) => {
 
   if(req.session.userid) {
-    res.locals.sessions = req.sessions
+    res.locals.session = req.session
   }
 
   next()
@@ -81,7 +81,7 @@ app.get('/', ToughtController.showTougths)
 
 
 conn
-//.sync({force: true}) - se precisar usar
+//.sync({force: true})
 .sync()
 .then(() => {
   app.listen(3000)

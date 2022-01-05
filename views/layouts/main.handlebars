@@ -17,9 +17,14 @@
     </a>
     <ul>
       <li><a href="/">Toughts</a></li>
-      <!--URLs com autenticação-->
-      <li><a href="/login">Login</a></li>
-      <li><a href="/register">Register</a></li>
+      <!--URLs após autenticação-->
+      {{#if session.userid}}
+        <li><a href="/toughts/dashboard">Dashboard</a></li>
+        <li><a href="/logout">Exit</a></li>
+      {{else}}
+        <li><a href="/login">Login</a></li>
+        <li><a href="/register">Register</a></li>
+      {{/if}}      
     </ul>
   </nav>
   <div class="container">
