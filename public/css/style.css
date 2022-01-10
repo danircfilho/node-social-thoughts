@@ -2,13 +2,19 @@
   font-family: Helvetica, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #222;
+  background-color: #0a0b17;
   color: #fff;
 }
 
 /* NAVBAR */
 #logo img {
-  height: 40px;
+  height: 70px;
+  width: 70px;
+  background-color: #242338;
+}
+
+.logo {
+  background-color: #242338 !important;
 }
 
 #navbar {
@@ -17,7 +23,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #222;
+  background-color: #242338;
   color: #fff;
   border-bottom: 1px solid #f6982d;
 }
@@ -25,13 +31,16 @@
 #navbar ul {
   display: flex;
   list-style: none;
+  background-color: #242338;
 }
 
 #navbar ul li {
   margin-left: 1em;
+  background-color: #242338;
 }
 
 #navbar ul li a {
+  background-color: #242338;
   text-decoration: none;
   color: #fff;
   transition: 0.5s;
@@ -162,6 +171,10 @@ form input[type='submit']:hover,
   margin: 0 0.5em;
 }
 
+.dashboard a {
+  color: #f6982d;
+}
+
 /* CREATE / EDIT FORM */
 .tought-form-container a {
   color: #f6982d;
@@ -279,15 +292,16 @@ form input[type='submit']:hover,
 
 /* FOOTER */
 footer {
-  height: 150px;
+  height: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-top: 1px solid #f6982d;
-  background-color: #222;
+  background-color: #242338;
 }
 
 footer span {
   font-weight: bold;
   color: #f6982d;
+  background-color: #242338;
 }
