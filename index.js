@@ -1,6 +1,6 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
-const  session = require('express-session')
+const session = require('express-session')
 const FileStore = require('session-file-store')(session)
 const flash = require('express-flash')
 
@@ -50,7 +50,7 @@ app.use(
       secure: false,
       maxAge: 360000, //equivale a 01 dia
       expires: new Date(Date.now() + 360000),
-      httpOnly: true //em produção, para https deve-se mudar esta configuração (certificado de segurança)
+      httpOnly: false //em produção, para https deve-se mudar esta configuração (certificado de segurança)
     }
   })
 )
@@ -79,11 +79,13 @@ app.use('/', authRoutes)
 
 app.get('/', ToughtController.showTougths)
 
+//Heroku - Porta
+const PORT = process.env.PORT || 3000
 
 conn
-.sync({force: true})
-//.sync()
+//.sync({force: true})
+.sync()
 .then(() => {
-  app.listen(3000)
+  app.listen(PORT)
 })
 .catch((err) => console.log(err))
