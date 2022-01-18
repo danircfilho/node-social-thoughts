@@ -12,7 +12,7 @@ const Tought = db.define('Tought', {
   }
 })
 
-Tought.belongsTo(User) //Toughts (pensamentos) pertence a 01 usuário (User)
-User.hasMany(Tought) //01 usuário (User) possui vários pensamentos (Toughts) 
+Tought.belongsTo(User)
+User.hasMany(Tought)
 
 module.exports = Tought 

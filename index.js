@@ -19,50 +19,47 @@ const authRoutes = require('./routes/authRoutes')
 //Import Controllers
 const ToughtController = require('./controllers/ToughtController')
 
-
 //template engine
 app.engine('handlebars', exphbs.engine())
 app.set('view engine', 'handlebars')
 
-//receive response from the body (receber do body)
+//receive response from the body
 app.use(
   express.urlencoded({
     extended: true
   })
 )
 
-//receive data in JSON (receber em JSON)
+//receive data in JSON
 app.use(express.json())
 
-//sessions - where sessions will be saved (sessões salvas)
+//sessions - where sessions will be saved
 app.use(
   session({
-    name: 'session', //nome padrão
-    secret: 'nosso_secret', //proteger as sessões do usuário
-    resave: false, //caiu a sessão desconecta
+    name: 'session', 
+    secret: 'nosso_secret', 
+    resave: false,
     saveUninitialized: false,
-    //onde será salvo (store) - 'path', 'os' (core modules) - caminho para salvar na pasta sessions (servidor)
     store: new FileStore({
       logFn: function() {},
       path: require('path').join(require('os').tmpdir(), 'sessions'),
     }),
     cookie: {
       secure: false,
-      maxAge: 360000, //equivale a 01 dia
+      maxAge: 360000, //01 day
       expires: new Date(Date.now() + 360000),
-      httpOnly: false //em produção, para https deve-se mudar esta configuração (certificado de segurança)
+      httpOnly: false //localhost = true
     }
   })
 )
 
-//flash messages (feedback do sistema sobre mudanças - status do sistema)
+//flash messages
 app.use(flash())
 
-//public  patch - assets (pasta padrão para imagens, css, etc)
+//public  patch - assets 
 app.use(express.static('public'))
 
-//set session to res - sessão de resposta
-//nota, sempre será seguido (next), entretanto se o usuário estiver logado (id) vai para a sessão dele
+//set session to res
 app.use((req, res, next) => {
 
   if(req.session.userid) {
@@ -80,10 +77,10 @@ app.use('/', authRoutes)
 app.get('/', ToughtController.showTougths)
 
 //Heroku - Porta
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT
 
 conn
-//.sync({force: true})
+//.sync({force: true}) - Warning!!!
 .sync()
 .then(() => {
   app.listen(PORT)

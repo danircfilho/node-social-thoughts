@@ -1,6 +1,6 @@
 const User = require('../models/User')
 
-const bcrypt = require('bcryptjs') //criptografar senha
+const bcrypt = require('bcryptjs')
 
 module.exports = class AuthController {
     static login(req, res) {
@@ -30,12 +30,12 @@ module.exports = class AuthController {
       return
     }  
     
-    //initialize session (iniciar a sessão após logar)
+    //initialize session
     req.session.userid = user.id
 
     req.flash('message', 'Successfully authenticated!')
 
-    //garantir que a sessão seja salva (em uma função anônima)
+    //save session
     req.session.save(() => {
       res.redirect('/') 
     }) 
@@ -48,27 +48,27 @@ module.exports = class AuthController {
   static async registerPost(req, res) {
     const { name, email, password, confirmpassword } = req.body
     
-    //password match validation (senha igual)
+    //password match validation
     if(password != confirmpassword) {
       req.flash('message', "Passwords don't match, try again!")
       res.render('auth/register')
 
-      return //parar a função e retornar
+      return
     }
     
-    //check if the user exists (por email)
+    //check if the user exists (email)
     const checkIfUserExists = await User.findOne({ where: {email: email} })
 
     if(checkIfUserExists) {
       req.flash('message', 'The email informed is already in use!')
       res.render('auth/register')
 
-      return //parar a função e retornar
+      return 
     }
     
-    //create password (segurança para as senhas)
-    const salt = bcrypt.genSaltSync(10) //salt 10 caracteres para o hash
-    const hashedPassword = bcrypt.hashSync(password, salt) //hash das senhas
+    //create password - hash
+    const salt = bcrypt.genSaltSync(10)
+    const hashedPassword = bcrypt.hashSync(password, salt)
 
     const user = {
       name, 
@@ -76,16 +76,16 @@ module.exports = class AuthController {
       password: hashedPassword,
     }
 
-    //create user in database - handle errors (tratar erros)
+    //create user in database - handle errors 
     try {
       const createdUser = await User.create(user)
 
-      //initialize session (iniciar a sessão após logar)
+      
       req.session.userid = createdUser.id
 
       req.flash('message', 'Registration successful!')
 
-      //garantir que a sessão seja salva (em uma função anônima)
+      
       req.session.save(() => {
         res.redirect('/') 
       }) 
