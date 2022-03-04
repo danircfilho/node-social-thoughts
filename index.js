@@ -80,8 +80,8 @@ app.get('/', ToughtController.showTougths)
 const PORT = process.env.PORT
 
 conn
-.sync({force: true}) //- Warning!!!
-//.sync()
+//.sync({force: true}) - Warning!!!
+.sync()
 .then(() => {
   app.listen(PORT)
 })
